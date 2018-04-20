@@ -9,7 +9,8 @@
 
 ## Getting started
 **Requirements to run - Python**
-* git clone
+* git clone - https://github.com/Leigan0/fruit-machine.git
+* cd fruit-machine
 * pip install -r requirements.txt
 
 ## Running Tests
