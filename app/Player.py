@@ -1,9 +1,12 @@
 class Player:
     def __init__(self):
-        self.wallet = 10
+        self.funds = 10
 
     def debit(self, stake):
-        self.wallet -= stake
+        self.funds -= stake
 
     def credit(self, stake):
-        self.wallet += stake
+        self.funds += stake
+
+    def wallet(self):
+        return self.funds

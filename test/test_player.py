@@ -7,18 +7,18 @@ class PlayerTestSpec(unittest.TestCase):
         self.player = Player()
 
     def test_player_has_initial_wallet_of_10(self):
-        self.assertEqual(self.player.wallet, 10)
+        self.assertEqual(self.player.wallet(), 10)
 
     def test_debit_method_reduces_balance_by_debit_amount(self):
         self.player.debit(1)
-        self.assertEqual(self.player.wallet, 9)
+        self.assertEqual(self.player.wallet(), 9)
 
     def test_debit_method_reduces_balance_by_correct_debit_amount(self):
         self.player.debit(4)
-        self.assertNotEqual(self.player.wallet, 10)
-        self.assertEqual(self.player.wallet, 6)
+        self.assertNotEqual(self.player.wallet(), 10)
+        self.assertEqual(self.player.wallet(), 6)
 
     def test_credit_method_increases_balance_by_correct_debit_amount(self):
         self.player.credit(4)
-        self.assertNotEqual(self.player.wallet, 10)
-        self.assertEqual(self.player.wallet, 14)
+        self.assertNotEqual(self.player.wallet(), 10)
+        self.assertEqual(self.player.wallet(), 14)
