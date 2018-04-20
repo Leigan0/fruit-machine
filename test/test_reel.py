@@ -31,3 +31,17 @@ class ReelTestSpec(unittest.TestCase):
         choice_mock.return_value = "white"
         self.reel.spin_reel()
         self.assertEqual(self.reel.reel(), ["white", "white", "white", "white"])
+
+    @mock.patch('random.choice')
+    def test_all_items_match_method_returns_true_if_matching_slots(self, choice_mock):
+        choice_mock.return_value = "white"
+        self.reel.spin_reel()
+        self.assertTrue(self.reel.in_a_row())
+
+    def test_all_items_match_method_returns_false_if_not_all_slots_matching_slots(self):
+        self.reel._reel = mock.MagicMock(return_value=["blue", 'green', "yellow"])
+        self.assertFalse(self.reel.in_a_row())
+
+    def test_all_items_match_method_returns_false_if_not_all_slots_matching_slots(self):
+        self.reel._reel = mock.MagicMock(return_value=["blue", "blue", "yellow", "blue", "blue"])
+        self.assertFalse(self.reel.in_a_row())
