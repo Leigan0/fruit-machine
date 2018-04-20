@@ -15,5 +15,10 @@ class PlayerTestSpec(unittest.TestCase):
 
     def test_debit_method_reduces_balance_by_correct_debit_amount(self):
         self.player.debit(4)
-        self.assertNotEqual(self.player.wallet, 1)
+        self.assertNotEqual(self.player.wallet, 10)
         self.assertEqual(self.player.wallet, 6)
+
+    def test_credit_method_increases_balance_by_correct_debit_amount(self):
+        self.player.credit(4)
+        self.assertNotEqual(self.player.wallet, 10)
+        self.assertEqual(self.player.wallet, 14)

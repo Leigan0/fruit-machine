@@ -4,3 +4,6 @@ class Player:
 
     def debit(self, stake):
         self.wallet -= stake
+
+    def credit(self, stake):
+        self.wallet += stake
