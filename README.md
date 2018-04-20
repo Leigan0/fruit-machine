@@ -1,5 +1,7 @@
 # Fruit machine
 
+[![Build Status](https://travis-ci.org/Leigan0/fruit-machine.svg?branch=master)](https://travis-ci.org/Leigan0/fruit-machine)
+
 ## Technologies used
 * Python
 * Nose
