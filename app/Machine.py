@@ -1,6 +1,22 @@
+from Reel import Reel
+
 class Machine:
-    def __init__(self):
+    MINIMUM_BET = 1
+    def __init__(self, reel_object=Reel):
         self._prizefund = 0
+        self.reel = reel_object()
 
     def prizefund(self):
         return self._prizefund
+
+    def spin_reel(self):
+        self._prizefund += Machine.MINIMUM_BET
+        self.reel.spin_reel()
+
+    def release_funds(self):
+        if self.prize_spin():
+            self._prizefund = 0
+
+
+    def prize_spin(self):
+        return self.reel.in_a_row()
