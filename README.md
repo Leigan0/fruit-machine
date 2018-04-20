@@ -11,7 +11,7 @@
 
 ## Getting started
 Requirements to run
-* Python,
+* Python
 * Pip
 
 ```
