@@ -22,6 +22,17 @@ class MachineTestSpec(unittest.TestCase):
         self.machine.release_funds()
         self.assertTrue(self.machine.reel.in_a_row.called)
 
+    def test_machine_release_funds_method_returns_prize_fund_amount_if_win(self):
+        self.machine.spin_reel()
+        self.machine.spin_reel()
+        self.machine.reel.in_a_row.return_value = True
+        self.assertEqual(self.machine.release_funds(), (Machine.MINIMUM_BET*2))
+
+    def test_machine_release_funds_method_returns_0_prize_fund_if_no_win(self):
+        self.machine.spin_reel()
+        self.machine.reel.in_a_row.return_value = False
+        self.assertEqual(self.machine.release_funds(), 0)
+
     def test_machine_releases_funds_with_confirmation_of_prize_row(self):
         self.machine.spin_reel()
         self.machine.reel.in_a_row.return_value = True

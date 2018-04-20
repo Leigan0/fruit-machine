@@ -14,9 +14,12 @@ class Machine:
         self.reel.spin_reel()
 
     def release_funds(self):
+        debit_amount = self._prizefund
         if self.prize_spin():
             self._prizefund = 0
-
+            return debit_amount
+        else:
+            return 0
 
     def prize_spin(self):
         return self.reel.in_a_row()
