@@ -22,6 +22,7 @@ class PlayerTestSpec(unittest.TestCase):
 
     def test_player_debit_will_throw_error_if_insufficient_funds(self):
         with self.assertRaises(Exception): self.player.debit(Player.DEFAULT_FUNDS+self.minimum_bet)
+        self.assertEqual(self.player.wallet(), Player.DEFAULT_FUNDS)
 
     def test_credit_method_increases_balance_by_correct_debit_amount(self):
         stake = 4
