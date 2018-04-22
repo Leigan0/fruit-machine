@@ -26,3 +26,7 @@ class GameRunnerTestSpec(unittest.TestCase):
     def test_machine_calls_debit_method_on_player_object(self):
         self.gamerunner.spin_reel()
         self.assertTrue(self.gamerunner.player.debit.called)
+
+    def test_machine_calls_print_display_method_on_printer_object(self):
+        self.gamerunner.spin_reel()
+        self.assertTrue(self.gamerunner.printer.print_display.called)
