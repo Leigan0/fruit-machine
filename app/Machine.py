@@ -11,7 +11,7 @@ class Machine:
 
     def spin_reel(self):
         self._prizefund += Machine.MINIMUM_BET
-        self.reel.spin_reel()
+        return self.reel.spin_reel()
 
     def release_funds(self):
         debit_amount = self._prizefund
