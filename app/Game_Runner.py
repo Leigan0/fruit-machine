@@ -12,3 +12,5 @@ class GameRunner:
     def spin_reel(self):
         self.player.debit(self.machine.MINIMUM_BET)
         self.printer.print_display(self.machine.spin_reel())
+        if (self.machine.prize_spin()) == True:
+            self.printer.display_prizefund(self.machine.release_funds())
