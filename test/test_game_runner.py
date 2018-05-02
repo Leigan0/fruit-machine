@@ -35,3 +35,8 @@ class GameRunnerTestSpec(unittest.TestCase):
         self.gamerunner.machine.prize_spin.return_value = True
         self.gamerunner.spin_reel()
         self.assertTrue(self.gamerunner.printer.display_prizefund.called)
+
+    def test_game_calls_credit_player_by_jackpot_if_prize_spin(self):
+        self.gamerunner.machine.prize_spin.return_value = True
+        self.gamerunner.spin_reel()
+        self.assertTrue(self.gamerunner.player.credit.called)

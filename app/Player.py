@@ -1,5 +1,5 @@
 class Player:
-    DEFAULT_FUNDS = 10
+    DEFAULT_FUNDS = 10  # type: int
     def __init__(self):
         self.funds = Player.DEFAULT_FUNDS
 

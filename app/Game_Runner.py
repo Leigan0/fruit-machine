@@ -1,5 +1,3 @@
-from app.Machine import Machine
-from app.Player import Player
 from app.Printer import Printer
 
 class GameRunner:
@@ -13,4 +11,6 @@ class GameRunner:
         self.player.debit(self.machine.MINIMUM_BET)
         self.printer.print_display(self.machine.spin_reel())
         if (self.machine.prize_spin()) == True:
-            self.printer.display_prizefund(self.machine.release_funds())
+            prize = self.machine.release_funds()
+            self.printer.display_prizefund(prize)
+            self.player.credit(prize)
