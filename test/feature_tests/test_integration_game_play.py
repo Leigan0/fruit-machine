@@ -2,7 +2,7 @@
 import unittest
 import mock
 import sys
-from io import StringIO
+from StringIO import StringIO
 from app.Game_Runner import GameRunner
 from app.Machine import Machine
 from app.Player import Player

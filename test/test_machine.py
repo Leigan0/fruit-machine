@@ -7,13 +7,13 @@ class MachineTestSpec(unittest.TestCase):
         self.mock_reel = MagicMock()
         self.machine = Machine(self.mock_reel)
 
-    def test_machine_knows_its_own_prizefund_balance(self):
+    def test_machine_knows_its_own_default_prizefund_balance(self):
         self.assertEqual(self.machine.prizefund(), 0)
 
-    def test_machine_prize_fund_increases_by_default_bet_with_reel_spin(self):
-        self.machine.spin_reel()
-        self.assertEqual(self.machine.prizefund(), Machine.MINIMUM_BET)
-
+    def test_machine_can_have_float_value_set_at_creation(self):
+        machine = Machine(self.mock_reel, 50)
+        self.assertEqual(machine.prizefund(), 50)
+        
     def test_machine_calls_spin_reel_method_on_reel_object(self):
         self.machine.spin_reel()
         self.assertTrue(self.machine.reel.spin_reel.called)

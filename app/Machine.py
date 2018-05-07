@@ -4,8 +4,8 @@ from app.Reel import Reel
 class Machine:
     MINIMUM_BET = 1
 
-    def __init__(self, reel_object=Reel):
-        self._prizefund = 0
+    def __init__(self, reel_object=Reel, float=0):
+        self._prizefund = float
         self.reel = reel_object()
 
     def prizefund(self):
