@@ -11,7 +11,6 @@ class Player:
     def credit(self, stake):
         self.funds += stake
 
-
     def wallet(self):
         return self.funds
 

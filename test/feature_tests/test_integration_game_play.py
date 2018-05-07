@@ -13,17 +13,17 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         self.machine = Machine(Reel)
         self.gamerunner = GameRunner(self.machine, self.player, self.printer)
 
-    @mock.patch('app.Machine.Machine.prize_spin')
+    @mock.patch('random.choice', side_effect=["Black", "Yellow", "Blue", "Green"])
     def test_player_machine_credit_balance_reduces_on_nonprizereel_spin(self, jackpot_mock):
-        jackpot_mock.return_value = False
         self.gamerunner.spin_reel()
         self.assertEqual(self.gamerunner.player.wallet(), (Player.DEFAULT_FUNDS-Machine.MINIMUM_BET))
         self.assertEqual(self.gamerunner.machine.prizefund(), (Machine.MINIMUM_BET))
 
-    @mock.patch('app.Machine.Machine.prize_spin')
-    def test_player_credit_balance_increases_on_prizereel_spin(self, jackpot_mock):
-        jackpot_mock.return_value = True
+    @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Black"])
+    def test_player_credit_balance_increases_on_prizereel_spin(self, slot_mock):
         self.gamerunner.spin_reel()
         # Wallet will be default as game jackpot funds spent
         self.assertEqual(self.gamerunner.player.wallet(), Player.DEFAULT_FUNDS)
         self.assertEqual(self.gamerunner.machine.prizefund(), 0)
+    #
+    # def test_player_cannot_play_if_no_available_funds(self):
