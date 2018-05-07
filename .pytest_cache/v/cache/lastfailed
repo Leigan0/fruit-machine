@@ -1,0 +1,8 @@
+{
+  "test/feature_tests/test_integration_game_play.py": true, 
+  "test/test_game_runner.py": true, 
+  "test/test_machine.py": true, 
+  "test/test_player.py": true, 
+  "test/test_printer.py": true, 
+  "test/test_reel.py": true
+}

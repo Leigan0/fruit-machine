@@ -1,5 +1,8 @@
+# coding: utf8
 import unittest
 import mock
+import sys
+from StringIO import StringIO
 from app.Game_Runner import GameRunner
 from app.Machine import Machine
 from app.Player import Player
@@ -26,4 +29,26 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         self.assertEqual(self.gamerunner.player.wallet(), Player.DEFAULT_FUNDS)
         self.assertEqual(self.gamerunner.machine.prizefund(), 0)
     #
-    # def test_player_cannot_play_if_no_available_funds(self):
+    @mock.patch('app.Machine.Machine.prize_spin')
+    def test_player_cannot_play_if_no_available_funds(self, jackpot_mock):
+        jackpot_mock.return_value = False
+        for i in range(0, Player.DEFAULT_FUNDS):
+            self.gamerunner.spin_reel()
+
+        with self.assertRaises(Exception): self.gamerunner.spin_reel()
+
+    @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Blue"])
+    def test_printer_prints_reel_to_std_out(self, reel_mock):
+        out = StringIO()
+        sys.stdout = out
+        self.gamerunner.spin_reel()
+        output = out.getvalue().strip()
+        self.assertEqual(output, "Reel Spin Results: Black Black Black Blue")
+
+    @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Black"])
+    def test_printer_prints_reel_to_std_out_with_Jackpot(self, reel_mock):
+        out = StringIO()
+        sys.stdout = out
+        self.gamerunner.spin_reel()
+        output = out.getvalue().strip()
+        self.assertEqual(output, "Reel Spin Results: Black Black Black Black\nJackpot winner £1 !!!!!!")
