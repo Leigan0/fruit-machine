@@ -11,4 +11,4 @@ class PrinterTestSpec(unittest.TestCase):
         self.assertEqual(self.printer.display_data(input),"Reel Spin Results: red green black blue")
 
     def test_printer_can_display_jackpot_message(self):
-        self.assertEqual(self.printer._format_prizefund(20), "Jackpot winner £20 !!!!!!")
+        self.assertEqual(self.printer._format_prizefund(20), "Jackpot win £20 !!!!!!")

@@ -2,7 +2,7 @@
 import unittest
 import mock
 import sys
-from io import StringIO
+from StringIO import StringIO
 from app.Game_Runner import GameRunner
 from app.Machine import Machine
 from app.Player import Player
@@ -46,7 +46,7 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         sys.stdout = out
         self.gamerunner.spin_reel()
         output = out.getvalue().strip()
-        self.assertEqual(output, "Reel Spin Results: Black Black Black Blue")
+        self.assertEqual(output, "Reel Spin Results: Black Black Black Blue\nUnlucky, try again?")
 
     @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Black"])
     def test_printer_prints_reel_to_std_out_with_Jackpot(self, reel_mock):
@@ -54,4 +54,4 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         sys.stdout = out
         self.gamerunner.spin_reel()
         output = out.getvalue().strip()
-        self.assertEqual(output, "Reel Spin Results: Black Black Black Black\nJackpot winner £1 !!!!!!")
+        self.assertEqual(output, "Reel Spin Results: Black Black Black Black\nJackpot win £1 !!!!!!")
