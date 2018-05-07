@@ -1,5 +1,5 @@
+# coding: utf8
 from app.Reel import Reel
-
 
 class Machine:
     MINIMUM_BET = 1

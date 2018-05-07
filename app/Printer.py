@@ -5,7 +5,7 @@ class Printer:
         print(self.display_data(data))
 
     def display_prizefund(self, data):
-        print(_format_prizefund())
+        print(self._format_prizefund(data))
 
     def display_data(self,data):
         return self._header() + self._format_data(data)

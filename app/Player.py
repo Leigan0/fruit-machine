@@ -1,3 +1,4 @@
+# coding: utf8
 class Player:
     DEFAULT_FUNDS = 10  # type: int
     def __init__(self):
@@ -9,6 +10,7 @@ class Player:
 
     def credit(self, stake):
         self.funds += stake
+
 
     def wallet(self):
         return self.funds
