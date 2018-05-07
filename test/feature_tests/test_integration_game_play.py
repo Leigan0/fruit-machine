@@ -2,7 +2,7 @@
 import unittest
 import mock
 import sys
-from StringIO import StringIO
+from io import StringIO
 from app.Game_Runner import GameRunner
 from app.Machine import Machine
 from app.Player import Player
@@ -37,7 +37,7 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
 
         with self.assertRaises(Exception): self.gamerunner.spin_reel()
         self.assertEqual(self.gamerunner.player.wallet(), 0)
-        self.assertEqual(self.gamerunner.machine.prizefund(), (Machine.MINIMUM_BET * 10))
+        self.assertEqual(self.gamerunner.machine.prizefund(), (Player.DEFAULT_FUNDS))
 
 
     @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Blue"])
