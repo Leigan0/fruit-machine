@@ -16,19 +16,26 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         self.machine = Machine(Reel)
         self.gamerunner = GameRunner(self.machine, self.player, self.printer)
 
-    @mock.patch('random.choice', side_effect=["Black", "Yellow", "Blue", "Green"])
+    @mock.patch('random.choice', side_effect=["Black", "Yellow", "Blue", "Blue"])
     def test_player_machine_credit_balance_reduces_on_nonprizereel_spin(self, jackpot_mock):
         self.gamerunner.spin_reel()
         self.assertEqual(self.gamerunner.player.wallet(), (Player.DEFAULT_FUNDS-Machine.MINIMUM_BET))
         self.assertEqual(self.gamerunner.machine.prizefund(), (Machine.MINIMUM_BET))
 
     @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Black"])
-    def test_player_credit_balance_increases_on_prizereel_spin(self, slot_mock):
+    def test_player_credit_balance_by_machine_jackpot_with_matching_prizereel_spin(self, slot_mock):
         self.gamerunner.spin_reel()
         # Wallet will be default as game jackpot funds spent
         self.assertEqual(self.gamerunner.player.wallet(), Player.DEFAULT_FUNDS)
         self.assertEqual(self.gamerunner.machine.prizefund(), 0)
-    #
+
+    @mock.patch('random.choice', side_effect=["Black", "Blue", "Green", "Yellow"])
+    def test_player_credit_balance_increases_by_half_jackport_on_no_match_prizereel_spin(self, slot_mock):
+        self.gamerunner.spin_reel()
+        #player minus MINIMUM_BET + half returned
+        self.assertEqual(self.gamerunner.player.wallet(), (Player.DEFAULT_FUNDS - float(Machine.MINIMUM_BET)/2 ))
+        self.assertEqual(self.gamerunner.machine.prizefund(), float(Machine.MINIMUM_BET)/2)
+
     @mock.patch('app.Machine.Machine.prize_spin')
     def test_player_cannot_play_if_no_available_funds(self, jackpot_mock):
         jackpot_mock.return_value = False
@@ -38,7 +45,6 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         with self.assertRaises(Exception): self.gamerunner.spin_reel()
         self.assertEqual(self.gamerunner.player.wallet(), 0)
         self.assertEqual(self.gamerunner.machine.prizefund(), (Player.DEFAULT_FUNDS))
-
 
     @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Blue"])
     def test_printer_prints_reel_to_std_out(self, reel_mock):
@@ -55,3 +61,11 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
         self.gamerunner.spin_reel()
         output = out.getvalue().strip()
         self.assertEqual(output, "Reel Spin Results: Black Black Black Black\nJackpot win £1 !!!!!!")
+
+    @mock.patch('random.choice', side_effect=["Black", "Blue", "Green", "Yellow"])
+    def test_printer_prints_reel_to_std_out_with_Jackpot(self, reel_mock):
+        out = StringIO()
+        sys.stdout = out
+        self.gamerunner.spin_reel()
+        output = out.getvalue().strip()
+        self.assertEqual(output, "Reel Spin Results: Black Blue Green Yellow\nJackpot win £0.5 !!!!!!")

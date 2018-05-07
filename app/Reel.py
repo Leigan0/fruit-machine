@@ -19,6 +19,9 @@ class Reel:
     def in_a_row(self):
         return len(set(self._reel)) == 1
 
+    def no_match(self):
+        return len(set(self._reel)) == len(self._reel)
+
     def build_reel(self, reel_size):
         for i in range(0, reel_size):
             self._reel.append(None)

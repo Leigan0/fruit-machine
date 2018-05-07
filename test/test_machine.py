@@ -13,7 +13,7 @@ class MachineTestSpec(unittest.TestCase):
     def test_machine_can_have_float_value_set_at_creation(self):
         machine = Machine(self.mock_reel, 50)
         self.assertEqual(machine.prizefund(), 50)
-        
+
     def test_machine_calls_spin_reel_method_on_reel_object(self):
         self.machine.spin_reel()
         self.assertTrue(self.machine.reel.spin_reel.called)
@@ -31,18 +31,29 @@ class MachineTestSpec(unittest.TestCase):
     def test_machine_release_funds_method_returns_0_prize_fund_if_no_win(self):
         self.machine.spin_reel()
         self.machine.reel.in_a_row.return_value = False
+        self.machine.reel.no_match.return_value = False
         self.assertEqual(self.machine.release_funds(), 0)
 
-    def test_machine_releases_funds_with_confirmation_of_prize_row(self):
+    def test_machine_releases_funds_with_confirmation_of_matching_row_row(self):
         self.machine.spin_reel()
         self.machine.reel.in_a_row.return_value = True
         self.assertEqual(self.machine.prizefund(), Machine.MINIMUM_BET)
         self.machine.release_funds()
         self.assertEqual(self.machine.prizefund(), 0)
 
+    def test_machine_releases_half_funds_with_confirmation_of_no_match_row(self):
+        self.machine.spin_reel()
+        self.machine.reel.in_a_row.return_value = False
+        self.machine.reel.no_match.return_value = True
+        self.assertEqual(self.machine.prizefund(), Machine.MINIMUM_BET)
+        # self.machine.reel.no_match.return_value = True
+        self.machine.release_funds()
+        self.assertEqual(self.machine.prizefund(), 0.5)
+
     def test_machine_does_not_releases_funds_with_confirmation_of_prize_row(self):
         self.machine.spin_reel()
         self.machine.reel.in_a_row.return_value = False
+        self.machine.reel.no_match.return_value = False
         self.assertEqual(self.machine.prizefund(), Machine.MINIMUM_BET)
         self.machine.release_funds()
         self.assertEqual(self.machine.prizefund(), Machine.MINIMUM_BET)

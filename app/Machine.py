@@ -17,11 +17,14 @@ class Machine:
 
     def release_funds(self):
         debit_amount = self._prizefund
-        if self.prize_spin():
+        if self.reel.in_a_row():
             self._prizefund = 0
             return debit_amount
+        elif self.reel.no_match():
+            self._prizefund = float(self._prizefund)/2
+            return self._prizefund
         else:
             return 0
 
     def prize_spin(self):
-        return self.reel.in_a_row()
+        return(self.reel.in_a_row() or self.reel.no_match())
