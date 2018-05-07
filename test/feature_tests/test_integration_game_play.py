@@ -36,6 +36,9 @@ class GamePlayIntegrationTestSpec(unittest.TestCase):
             self.gamerunner.spin_reel()
 
         with self.assertRaises(Exception): self.gamerunner.spin_reel()
+        self.assertEqual(self.gamerunner.player.wallet(), 0)
+        self.assertEqual(self.gamerunner.machine.prizefund(), (Machine.MINIMUM_BET * 10))
+
 
     @mock.patch('random.choice', side_effect=["Black", "Black", "Black", "Blue"])
     def test_printer_prints_reel_to_std_out(self, reel_mock):
